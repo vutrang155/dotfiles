@@ -1,0 +1,24 @@
+# Catppuccin Mocha
+text-color = #cdd6f4
+prompt-color = #f38ba8
+selection-color = #f9e2af
+background-color = #1e1e2e
+
+corner-radius = 12
+
+border-width = 3 
+
+border-color = #cdd6f4
+outline-width = 0
+result-spacing = 25
+num-results = 5
+font = FiraCode Nerd Font Mono
+height = 20% 
+width = 15%
+
+prompt-text = ""
+padding-top = 15
+padding-left = 50
+
+input-background = #313244
+
