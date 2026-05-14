@@ -1,6 +1,19 @@
 # man 5 sway
 focus_follows_mouse no
-smart_gaps yes 
+smart_gaps no
+
+# Window borders
+default_border pixel 2
+default_floating_border pixel 2
+
+# Catppuccin Mocha
+# class                 border    background  text      indicator   child_border
+client.focused          #cba6f7   #1e1e2e     #cdd6f4   #cba6f7     #cba6f7
+client.unfocused        #313244   #1e1e2e     #6c7086   #313244     #313244
+client.focused_inactive #45475a   #1e1e2e     #cdd6f4   #45475a     #45475a
+client.urgent           #f38ba8   #1e1e2e     #cdd6f4   #f38ba8     #f38ba8
+gaps inner 50
+gaps outer 20 
 xwayland enable
 
 ### Variables
@@ -25,9 +38,9 @@ output * bg /home/vu/photos/wallpapers/mathieu-odin-CjGsv2QjVbo-unsplash.jpg fil
 # Lock screen after 5 minutes of inactivity
 # Sleep system after 10 minutes of inactivity
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
+         timeout 300 'swaylock -f' \
          timeout 600 'systemctl suspend' \
-         before-sleep 'swaylock -f -c 000000'
+         before-sleep 'swaylock -f'
 
 ### Key bindings
     # Start a terminal
@@ -50,7 +63,7 @@ exec swayidle -w \
     bindsym $mod+Shift+c reload
 
     # Lock screen
-    bindsym $mod+Shift+x exec swaylock -f -c 000000
+    bindsym $mod+Shift+x exec swaylock -f
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
@@ -113,6 +126,7 @@ exec swayidle -w \
     # respectively.
     bindsym $mod+b splith
     bindsym $mod+v splitv
+    bindsym $mod+Shift+v exec bash -c 'cliphist list | tofi | cliphist decode | wl-copy'
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
@@ -178,18 +192,20 @@ bindsym $mod+r mode "resize"
     # SCREEN SHOT
     # Screenshot keybindings (Windows Snipping Tool style)
     # Full screen screenshot to ~/Pictures/screenshots/
-    bindsym Print exec mkdir -p ~/screenshots && grim ~/Pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png
+    bindsym Print exec mkdir -p ~/Pictures/screenshots && grim ~/Pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png
     # Area selection screenshot to file (like Snipping Tool)
-    bindsym Shift+Print exec mkdir -p ~/screenshots && grim -g "$(slurp)" ~/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png
+    bindsym Shift+Print exec mkdir -p ~/Pictures/screenshots && grim -g "$(slurp)" ~/Pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png
     # Area selection screenshot to clipboard (quick capture)
     bindsym Ctrl+Print exec grim -g "$(slurp)" - | wl-copy
     # Current window screenshot
-    bindsym Alt+Print exec mkdir -p ~/screenshot/screenshots && grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" ~/Pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png
+    bindsym Alt+Print exec mkdir -p ~/Pictures/screenshots && grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" ~/Pictures/screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png
 
 # Deprecated sinceo moved to pipewire for easyeffects
 # exec_always killall pulseaudio
 # exec_always pulseaudio --start 
 
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
 exec mako
 exec fcitx5
 exec hash dbus-update-activation-environment 2>/dev/null && \

@@ -1,0 +1,38 @@
+ignore-empty-password
+show-failed-attempts
+
+# Background
+color=111111
+
+# Ring
+ring-color=ffffff
+ring-ver-color=cccccc
+ring-wrong-color=ff5555
+ring-clear-color=444444
+
+# Key highlight
+key-hl-color=88c0d0
+bs-hl-color=ff5555
+
+# Line (separator between ring and input)
+line-color=111111
+line-ver-color=111111
+line-wrong-color=111111
+line-clear-color=111111
+
+# Inside circle
+inside-color=1a1a1a
+inside-ver-color=1a1a1a
+inside-wrong-color=1a1a1a
+inside-clear-color=1a1a1a
+
+# Text
+text-color=ffffff
+text-ver-color=cccccc
+text-wrong-color=ff5555
+text-clear-color=aaaaaa
+
+# Separator
+separator-color=00000000
+
+font=FiraCode Nerd Font Mono
