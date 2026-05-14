@@ -1,22 +1,18 @@
+# XDG Base Directories
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
-export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
 
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-
-setopt SHARE_HISTORY
-export HISTFILE="$ZDOTDIR/.zhistory"
+# History
+export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=10000
 export SAVEHIST=10000
-
-HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
+setopt SHARE_HISTORY
 
 bindkey -v
 
- autoload -Uz compinit
- compinit
+autoload -Uz compinit
+compinit
 
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -25,15 +21,34 @@ export PROMPT="%B%m%b@%B%n%b:%~ %B%F{214}>%f%b "
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# PATH
+export PATH="$HOME/.local/bin:$HOME/.config/local/bin:$HOME/go/bin:$PATH"
 
-export PATH=$PATH:$HOME/go/bin
+# Rust
+. "$HOME/.cargo/env"
 
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# NVM – resolve default node to PATH without sourcing nvm.sh on every shell
 export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+() {
+  local ver node_bin
+  ver="$(< "$NVM_DIR/alias/default")" 2>/dev/null || return
+  node_bin="$(command ls -d "$NVM_DIR/versions/node/v${ver}".* 2>/dev/null | sort -V | tail -1)/bin"
+  [[ -d "$node_bin" ]] && path=("$node_bin" $path)
+}
+nvm() { unset -f nvm; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; nvm "$@"; }
 
-. "$HOME/.cargo/env"            
-export PATH="$HOME/.local/bin:$PATH"
+# fzf (Ctrl+R history, Ctrl+T files, Alt+C cd)
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+# Syntax highlighting (must be last plugin)
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias dotfiles='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
+
+# Bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
