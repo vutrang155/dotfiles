@@ -5,3 +5,7 @@ font-family-bold-italic = "FiraCode Nerd Font Mono Bold Italic"
 theme = catppuccin-mocha.conf
 font-size = 14 
 keybind = shift+enter=text:\x1b\r
+
+window-padding-x = 10
+window-padding-y = 10 
+

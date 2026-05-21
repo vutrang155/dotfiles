@@ -144,7 +144,7 @@ exec swayidle -w \
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
-    bindsym $mod+z focus child 
+    bindsym $mod+Shift+a focus child 
 #
 # Scratchpad:
 #
@@ -152,11 +152,13 @@ exec swayidle -w \
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+
+    # The fcitx5 remap minus to BackSpace => Check wev
+    bindsym $mod+Shift+BackSpace move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+BackSpace scratchpad show
 #
 # Resizing containers:
 #
